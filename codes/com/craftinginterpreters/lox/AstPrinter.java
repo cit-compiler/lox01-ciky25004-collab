@@ -1,6 +1,7 @@
 package com.craftinginterpreters.lox;
 
 class AstPrinter implements Expr.Visitor<String> {
+
   String print(Expr expr) {
     return expr.accept(this);
   }
@@ -27,7 +28,7 @@ class AstPrinter implements Expr.Visitor<String> {
     return parenthesize(expr.operator.lexeme, expr.right);
   }
 
-    private String parenthesize(String name, Expr... exprs) {
+  private String parenthesize(String name, Expr... exprs) {
     StringBuilder builder = new StringBuilder();
 
     builder.append("(").append(name);
@@ -38,8 +39,9 @@ class AstPrinter implements Expr.Visitor<String> {
     builder.append(")");
 
     return builder.toString();
+  } // ← これが欠けていた
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
     Expr expression = new Expr.Binary(
         new Expr.Unary(
             new Token(TokenType.MINUS, "-", null, 1),
@@ -49,7 +51,5 @@ class AstPrinter implements Expr.Visitor<String> {
             new Expr.Literal(45.67)));
 
     System.out.println(new AstPrinter().print(expression));
-  }
-
   }
 }
